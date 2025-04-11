@@ -25,7 +25,7 @@ jobs:
     permissions: read-all
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: True
+      fail-fast: False
       matrix:
         os: [ubuntu-latest, windows-latest, macos-13, macos-14]
     env:
@@ -256,7 +256,13 @@ jobs:
             #dnf repoquery -l cuda-nvrtc-12-8
 
           CIBW_BEFORE_ALL_MACOS: brew install ispc
-          CIBW_BEFORE_BUILD: bash ${{ env.WORKSPACE }}/install-conan.sh
+
+          CIBW_BEFORE_ALL_WINDOWS: pip install conan && conan install --require=libiconv/1.17 -r conancenter --build=libiconv/* --profile:all=%GITHUB_WORKSPACE%\conan-profiles\conan-profile-Windows-X64
+
+          CIBW_BEFORE_BUILD_LINUX: bash ${{ env.WORKSPACE }}/install-conan.sh
+          CIBW_BEFORE_BUILD_WINDOWS: bash.exe ${{ env.WORKSPACE }}/install-conan.sh
+          CIBW_BEFORE_BUILD_MACOS: bash ${{ env.WORKSPACE }}/install-conan.sh
+
           CIBW_REPAIR_WHEEL_COMMAND: ''
           CIBW_CONTAINER_ENGINE: >
             docker;

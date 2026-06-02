@@ -45,6 +45,7 @@ elif [[ "$RUNNER_OS" == "Linux" && -z "$CI" ]]; then
   # Linux - Plain local build
   echo "Linux - Plain local build"
   cache_dir=/tmp/conan-cache
+  mkdir -p $cache_dir
 else
   # Others
   echo "MacOS or Windows - CI build"
@@ -52,8 +53,8 @@ else
 fi
 
 echo "::group::CIBW_BEFORE_BUILD: pip"
-pipx install conan
-pipx install ninja
+pip install conan
+pip install ninja
 echo "::endgroup::"
 
 # 1. Clone conancenter at a specific commit and add this cloned repo as a

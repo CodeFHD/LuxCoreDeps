@@ -5,6 +5,12 @@
 # You may also want to clean /tmp/conan-cache, to avoid reinjection of previous
 # builds in the current one
 
+# dependencies
+# - pip install conan
+# - pip install ninja
+# - pacman -S ispc
+# - pacman -S intel-oneapi-toolkit
+
 # Specialized for Linux, but could be changed
 export RUNNER_OS=Linux
 export RUNNER_ARCH=X64
@@ -13,6 +19,8 @@ export RUNNER_ARCH=X64
 export LUXDEPS_VERSION=test
 export GCC_VERSION=14   # Note: even for gcc > 14
 export WORKSPACE=.
+export CC=/usr/bin/gcc-14
+export CXX=/usr/bin/g++-14
 export CXX_VERSION=20
 export CMAKE_POLICY_VERSION_MINIMUM=3.25
 export DEPS_BUILD_TYPE=Debug  # Or Release/RelWithDebInfo/MinSizeRel, as needed
